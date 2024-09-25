@@ -1,0 +1,159 @@
+.character {
+  width: 100px;
+  height: 150px;
+  position: relative;
+}
+
+.head {
+  width: 50px;
+  height: 50px;
+  background-color: #f4a460;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 25px;
+}
+
+.body {
+  width: 60px;
+  height: 80px;
+  background-color: #4682b4;
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+
+.arm {
+  width: 20px;
+  height: 60px;
+  background-color: #4682b4;
+  position: absolute;
+  top: 60px;
+}
+
+.left-arm {
+  left: 0;
+}
+
+.right-arm {
+  right: 0;
+}
+
+.idle .arm {
+  animation: none;
+}
+
+.talking .arm {
+  animation: talk 0.5s infinite alternate;
+}
+
+.listening .arm {
+  animation: listen 1s infinite;
+}
+
+@keyframes talk {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(20deg); }
+}
+
+@keyframes listen {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-20deg); }
+}
+
+.face {
+  width: 100px;
+  height: 100px;
+  background-color: #ffdb58;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.3s ease;
+  animation: bounce 1.5s infinite ease-in-out; // Ajustamos la duración y la función de temporización
+}
+
+.eyes {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+}
+
+.eye {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.pupil {
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.mouth {
+  width: 50px;
+  height: 20px;
+  border-radius: 0 0 100px 100px;
+  border: 4px solid #333;
+  border-top: none;
+  position: absolute;
+  bottom: 20%; 
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease;
+}
+
+.idle .pupil {
+  animation: look-around 5s infinite;
+}
+
+.talking .mouth {
+  animation: talk 0.5s infinite alternate;
+}
+
+.listening .eye {
+  animation: blink 2s infinite;
+}
+
+.listening {
+  animation: listen 1s infinite alternate;
+}
+
+@keyframes talk {
+  0% { transform: translateX(-50%) scaleY(1); }
+  100% { transform: translateX(-50%) scaleY(0.5); }
+}
+
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes look-around {
+  0%, 100% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-70%, -50%); }
+  50% { transform: translate(-50%, -70%); }
+  75% { transform: translate(-30%, -50%); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); } // Aumentamos la distancia del salto
+}
+
+@keyframes listen {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}

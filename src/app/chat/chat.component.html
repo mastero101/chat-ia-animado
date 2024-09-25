@@ -1,0 +1,45 @@
+<div class="chat-container">
+  <div class="character-container">
+    <app-animated-character [state]="characterState"></app-animated-character>
+  </div>
+  <div class="messages">
+    <div *ngFor="let message of messages" 
+         class="message" 
+         [ngClass]="{'user-message': message.isUser, 'bot-message': !message.isUser}">
+      <ng-container *ngIf="message.text">
+        <ng-container *ngIf="message.isContract; else normalMessage">
+          <pre class="contract-message">{{ message.text }}</pre>
+          <div class="download-container">
+            <button (click)="downloadPDF(message.text)" aria-label="Descargar contrato en PDF">
+              Descargar PDF
+            </button>
+          </div>
+        </ng-container>
+        <ng-template #normalMessage>
+          {{ message.text }}
+        </ng-template>
+      </ng-container>
+      <ng-container *ngIf="message.imageUrl">
+        <img [src]="message.imageUrl" alt="User Image" class="message-image">
+      </ng-container>
+    </div>
+    <div *ngIf="isLoading" class="message bot-message loading">
+      Escribiendo...
+    </div>
+  </div>
+  <div class="input-container">
+    <textarea [(ngModel)]="newMessage" 
+             (keyup.enter)="sendMessage()" 
+             placeholder="Escribe un mensaje..."
+             [disabled]="isLoading"></textarea>
+    <div class="button-container">
+      <label for="file-upload" class="file-upload-label" [class.disabled]="isLoading">
+        <span class="file-icon"></span>
+      </label>
+      <input id="file-upload" type="file" (change)="onImageSelected($event)" [disabled]="isLoading" style="display: none;">
+      <button (click)="sendMessage()" [disabled]="isLoading" aria-label="Enviar mensaje">
+        <span class="send-icon"></span>
+      </button>
+    </div>
+  </div>
+</div>
